@@ -19,3 +19,6 @@
 - скриншот с несколькими траекториями;
 - заполненную таблицу;
 - выводы.
+
+
+<img width="751" height="635" alt="image" src="https://github.com/user-attachments/assets/1e0c4684-9d02-44dd-abfa-84d7f0edbefb" />
