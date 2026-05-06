@@ -81,7 +81,7 @@ def run_simulation():
     plt.title("Траектории полёта")
     plt.grid(True)
 
-    # Моделирование для каждого dt без очистки результатов
+
     for dt in dt_values:
         distance, max_height, final_speed, xs, ys = simulate(dt, p)
 
@@ -92,10 +92,14 @@ def run_simulation():
             f"Скорость в конце: {final_speed:.3f} м/с\n"
         )
 
-        # Добавляем траекторию на график
         plt.plot(xs, ys, label=f"dt = {dt}")
 
-    result_text.set(results_str)
+    old = result_text.get()
+    if old.strip():
+        result_text.set(old + "\n" + results_str)
+    else:
+        result_text.set(results_str)
+
     plt.legend()
     plt.show()
 
