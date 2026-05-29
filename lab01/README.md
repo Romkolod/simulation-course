@@ -26,8 +26,6 @@
  
 
 (30*)    <img width="735" height="722" alt="image" src="https://github.com/user-attachments/assets/abf8b842-d1a0-4250-a93c-29e1e9e4e75b" />
-        
-60*
 
 
 
