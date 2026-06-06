@@ -1,30 +1,35 @@
 import numpy as np
 
-def simulate_heat(dx, dt, a=1e-4, L=1.0, T_total=2.0):
-    # проверка устойчивости
-    if dt > dx*dx/(2*a):
-        raise ValueError(f"Неустойчивая схема: dt={dt} слишком велико для dx={dx}")
+def simulate_heat(dx, dt, a=1.1e-4, L=0.1, T_total=2.0):
 
-    N = int(L / dx) + 1  # количество узлов
-
+    N = int(L / dx) + 1
     T = np.zeros(N)
-    T_new = np.zeros(N)
-
+    T[0] = 100.0
+    T[-1] = 100.0
     center = N // 2
-    T[center] = 100.0
-
     steps = int(T_total / dt)
+    A = a / dx ** 2
+    C = a / dx ** 2
+    B = (2 * a / dx ** 2) + (1 / dt)
+
+    alpha = np.zeros(N)
+    beta = np.zeros(N)
 
     for _ in range(steps):
+        alpha[1] = 0.0
+        beta[1] = 100.0
         for i in range(1, N - 1):
-            T_new[i] = T[i] + a * dt / dx**2 * (T[i+1] - 2*T[i] + T[i-1])
+            F = -T[i] / dt
+            denominator = B - C * alpha[i]
+            alpha[i + 1] = A / denominator
+            beta[i + 1] = (C * beta[i] - F) / denominator
+        T_new = np.zeros(N)
+        T_new[-1] = 100.0
+        for i in range(N - 2, -1, -1):
+            T_new[i] = alpha[i + 1] * T_new[i + 1] + beta[i + 1]
+        T = T_new
 
-        T_new[0] = 0
-        T_new[-1] = 0
-
-        T, T_new = T_new, T
-
-    return T[center]  # температура в центре через 2 секунды
+    return T[center]
 
 
 def main():
@@ -40,11 +45,10 @@ def main():
     for dt in dt_values:
         print(f"{dt:<8}", end="")
         for dx in dx_values:
-            try:
-                T_center = simulate_heat(dx, dt)
-                print(f"{T_center:12.4f}", end="")
-            except ValueError:
-                print(f"{'unstable':>12}", end="")
+            T_center = simulate_heat(dx, dt)
+            print(f"{T_center:12.4f}", end="")
         print()
 
-main()
+
+if __name__ == "__main__":
+    main()
