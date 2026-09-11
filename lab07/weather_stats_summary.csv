@@ -1,0 +1,4 @@
+﻿State_ID;State_Name;Days_Count;Empirical_Frequency;Theoretical_Stationary_Prob;Absolute_Difference
+1;Ясно;121;0.336111;0.386364;0.050253
+2;Облачно;136;0.377778;0.352273;0.025505
+3;Пасмурно;103;0.286111;0.261364;0.024747
